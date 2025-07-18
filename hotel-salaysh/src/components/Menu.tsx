@@ -17,7 +17,7 @@ const Menu = () => {
   return (
     <div>
             {open ? <X onClick={() => setOpen(false)} /> : <AlignJustify onClick={() => setOpen(true)} />}
-        {open && (<div className='bg-[rgba(255,255,255,)] backdrop-blur-sm shadow-md text-red-500 absolute top-22 left-0 text-3xl w-full z-10 h-[calc(100vh-5.5rem)] flex flex-col items-center pt-10 gap-4'>
+        {open && (<div className='bg-[rgba(255,255,255,0.3)] backdrop-blur-sm shadow-amber-900 text-red-500 absolute top-22 left-0 text-3xl w-full z-10 h-[calc(100vh-5.5rem)] flex flex-col items-center pt-10 gap-4'>
             {links.map((item)=>(
                     <Link href={item.href} key={item.id} onClick={() => setOpen(false)}>{item.label} </Link>   
             ))}
