@@ -30,7 +30,7 @@ const Slider = () => {
             <button className='bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors cursor-pointer'>Order Now</button>
         </div>
         <div className='flex-1 w-full relative '>
-            <Image src={data[current].image} alt={data[current].title} fill className='object-cover'/>
+            <Image src={data[current].image} alt={data[current].title} fill className='object-cover md:object-fill'/>
         </div>
     </div>
   )
