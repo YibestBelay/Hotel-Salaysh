@@ -4,7 +4,7 @@ import CountDown from './CountDown'
 
 const Offer = () => {
   return (
-    <div className=' h-screen  flex flex-col   bg-black md:flex-row '>
+    <div className=' h-[80vh] flex flex-col   bg-black md:flex-row '>
         <div className='flex-1 flex flex-col justify-center items-center gap-8 p-6'>
           <h1 className='text-5xl font-bold text-white'>Special Offer</h1>
           <p className='text-xl text-white'>Get 20% off on your first order</p>
