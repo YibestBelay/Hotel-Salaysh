@@ -21,7 +21,7 @@ const NavBar = () => {
                 <Phone className='w-5 h-5'/>
                 <p>+251912345678</p>
               </div>
-              {!user ? <Link href="/">Login</Link> : 
+              {!user ? <Link href="/login">Login</Link> : 
               <Link href="/orders">Orders</Link>}
               <CartIcon />
              </div>
