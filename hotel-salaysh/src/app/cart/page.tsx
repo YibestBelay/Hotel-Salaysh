@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 const CartPage = () => {
   return (
-    <div className='flex text-red-500  flex-col md:flex-row gap-8 md:h-[80vh]'>
+    <div className='flex h-[calc(100vh-5.5rem)] md:h-[calc(100vh-6.25rem)] text-red-500  flex-col md:flex-row gap-8 md:h-[80vh]'>
       {/* product */}
       <div className=' flex-1  flex flex-col justify-center h-full  gap-4 p-10 lg:px-15 xl:px-20  '>
               <div className=' flex flex-row justify-between items-center'>
