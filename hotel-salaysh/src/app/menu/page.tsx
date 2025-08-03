@@ -1,9 +1,21 @@
 import React from 'react'
-import {menu} from '../../data'
 import Link from 'next/link'
+import {MenuType} from '../../types/types'
 
-
-const MenuPage = () => {
+const getData = async()=>{
+      try {
+        const res = await fetch('http://localhost:3000/api/categories')
+         if(!res.ok){
+            throw new Error('Failed to fetch categories')
+         }
+        
+        return res.json()
+      } catch (error) {
+        console.log(error)
+      }
+}
+const MenuPage = async() => {
+  const menu:MenuType = await getData()
   return (
     <div className='p-4 lg:px-15 xl:px-20 h-[calc(100vh-5.5rem)] md:h-[calc(100vh-6.25rem)] flex flex-col items-center md:flex-row'>
        {menu.map((category)=>(
