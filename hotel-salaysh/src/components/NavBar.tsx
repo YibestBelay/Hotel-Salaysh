@@ -3,7 +3,8 @@ import React from 'react'
 import Menu from './Menu'
 import CartIcon from './CartIcon'
 import {Phone} from 'lucide-react'
-const user=false;
+import UserLink from './UserLink'
+
 const NavBar = () => {
   return (
     <div className=' h-12 text-red-500 px-4  flex justify-between items-center bb2  border-b-2 border-red-500 uppercase font-medium md:h-15  lg:px-15 xl:px-20'>
@@ -21,8 +22,7 @@ const NavBar = () => {
                 <Phone className='w-5 h-5'/>
                 <p>+251912345678</p>
               </div>
-              {!user ? <Link href="/login">Login</Link> : 
-              <Link href="/orders">Orders</Link>}
+              <UserLink />
               <CartIcon />
              </div>
         

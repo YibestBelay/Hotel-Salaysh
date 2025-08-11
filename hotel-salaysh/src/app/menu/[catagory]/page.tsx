@@ -5,7 +5,7 @@ import {ProductType} from '@/types/types'
 
 const getData = async(catagory:string)=>{
   try {
-    const res = await fetch('http://localhost:3000/api/products?catagory='+catagory)
+    const res = await fetch(`http://localhost:3000/api/products?category=${catagory}`)
      if(!res.ok){
         throw new Error('Failed to fetch products')
      }
