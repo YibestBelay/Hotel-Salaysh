@@ -19,8 +19,8 @@ const SingleProduct = async({params}:{params:{id:string}}) => {
         <div className='w-full h-1/2 flex flex-col gap-4 '>
           <h1 className='text-3xl font-bold uppercase'>{singleProduct.title}</h1>
           <p className='text-sm '>{singleProduct.desc}</p>
-          <Price price={singleProduct.price} id={singleProduct.id} options={singleProduct.options}/>
-        </div>
+          <Price product={singleProduct}/>
+        </div> 
     </div>
   )
 }  

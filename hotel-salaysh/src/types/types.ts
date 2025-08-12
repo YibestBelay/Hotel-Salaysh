@@ -9,7 +9,7 @@ export type MenuType = {
 }[];
 
 export type ProductType = {
-    id:number,
+    id:string,
     title:string,
     price:number,
     desc?:string,
@@ -30,10 +30,22 @@ export type OrderType = {
 };
 
 export type CartItemType = {
-    id:number,
+    id:string,
     title:string,
     price:number,
     img?:string,
     optionsTitle?:string,
     quantity:number;
 };
+
+export type CartType = {
+    products:CartItemType[],
+    totalItems:number,
+    totalPrice:number
+}
+export type ActionType = {
+    addToCart:(item:CartItemType)=>void,
+    removeFromCart:(item:CartItemType)=>void,
+    // increaseQuantity:(id:number)=>void,
+    // decreaseQuantity:(id:number)=>void
+}

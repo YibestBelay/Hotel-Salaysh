@@ -1,28 +1,40 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import { useCartStore } from '@/utils/store'
+import { ProductType } from '@/types/types'
+import { toast } from 'react-toastify'
 
-type Props={
-    price:number;
-    id:number;
-    options?:{
-        title:string;
-        additionalPrice:number }[];
-}
 
-const Price = ({price,id,options}:Props) => {
+const Price = ({product}:{product:ProductType}) => {
+    const {addToCart} = useCartStore();
     const [selected, setSelected] = useState(0);
-    const [Total, setTotal] = useState(price);
+    const [Total, setTotal] = useState(product.price);
     const [quantity, setQuantity] = useState(1);
 
+    useEffect(()=>{
+        useCartStore.persist.rehydrate()
+     },[])
+
+    const handleAddToCart = () => {
+        addToCart({
+            id:product.id,
+            title:product.title,
+            price:product.price,
+            img:product.img,
+            ...product.options?.length && {optionsTitle:product.options[selected].title},
+            quantity
+        })
+        toast.success('Product added to cart')
+    }
     useEffect(() => {
         setTotal(
-           quantity*( options? price + options[selected].additionalPrice:price));
-    },[quantity,price,options,selected])
+           quantity*( product.options? product.price + product.options[selected].additionalPrice:product.price));
+    },[quantity,product.price,product.options,selected])
   return (
     <div className='flex flex-col justify-center gap-4 w-full  md:gap-8'>
         <h2 className='text-2xl font-bold'>${Total.toFixed(2)}</h2>
         <div className='flex gap-4'>
-        {options?.map((option,index)=>(
+        {product.options?.map((option,index)=>(
             <button 
                     key={option.title} 
                     className='min-w-[6rem] p-2 ring-1 ring-red-400 rounded-md cursor-pointer'
@@ -47,7 +59,7 @@ const Price = ({price,id,options}:Props) => {
                 </div>
             </div>
             <div>
-            <button className=' w-30 bg-red-400 text-white ring-2 ring-red-400 p-2 cursor-pointer hover:bg-red-600 transition-colors'>
+            <button className=' w-30 bg-red-400 text-white ring-2 ring-red-400 p-2 cursor-pointer hover:bg-red-600 transition-colors' onClick={handleAddToCart}>
                 Add to Cart
             </button>
             </div>

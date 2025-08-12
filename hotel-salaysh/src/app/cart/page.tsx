@@ -1,55 +1,48 @@
-import React from 'react'
+'use client'
+import React, { useEffect } from 'react'
 import Image from 'next/image'
+import { useCartStore } from '@/utils/store'
+
+
+
 const CartPage = () => {
+  useEffect(()=>{
+    useCartStore.persist.rehydrate()
+ },[])
+
+  const {products,totalItems,totalPrice,removeFromCart} = useCartStore();
   return (
-    <div className='flex h-[calc(100vh-5.5rem)] md:h-[calc(100vh-6.25rem)] text-red-500  flex-col md:flex-row gap-8 md:h-[80vh]'>
+    <div className='flex h-[calc(100vh-5.5rem)] md:h-[calc(100vh-6.25rem)] text-red-500  flex-col md:flex-row gap-8 '>
       {/* product */}
       <div className=' flex-1  flex flex-col justify-center h-full  gap-4 p-10 lg:px-15 xl:px-20  '>
-              <div className=' flex flex-row justify-between items-center'>
-                <div className=' relative'>
-                <Image src='/Thanos restin.png' alt=""  width={100} height={100} className='object-contain'/>
+              {products.map((item)=>(
+                <div className=' flex flex-row justify-between items-center' key={item.id}>
+                  <div className=' relative'>
+                    {item.img && (
+                        <Image src={item.img!} alt=""  width={100} height={100} className='object-contain'/>
+                    )}
+                  </div>
+                  <div className=''>
+                    <h1 className='text-xl font-bold'>{item.title} X{item.quantity}</h1>
+                    <p>{item.optionsTitle}</p>
+                  </div>
+                  <p className='font-bold'>${item.price}</p>
+                  <button className='cursor-pointer' onClick={()=>removeFromCart(item)}>X</button>
                 </div>
-                <div className=''>
-                  <h1 className='text-xl font-bold'>Thanos</h1>
-                  <p>large</p>
-                </div>
-                <p className='font-bold'>${40}</p>
-                <button className=''>X</button>
-              </div>
-              <div className=' flex flex-row justify-between items-center'>
-                <div className=' relative'>
-                <Image src='/Thanos restin.png' alt=""  width={100} height={100} className='object-contain'/>
-                </div>
-                <div className=''>
-                  <h1 className='text-xl font-bold'>Thanos</h1>
-                  <p>large</p>
-                </div>
-                <p className='font-bold'>${40}</p>
-                <button className=''>X</button>
-              </div>
-              <div className=' flex flex-row justify-between items-center'>
-                <div className=' relative'>
-                <Image src='/Thanos restin.png' alt=""  width={100} height={100} className='object-contain'/>
-                </div>
-                <div className=''>
-                  <h1 className='text-xl font-bold'>Thanos</h1>
-                  <p>large</p>
-                </div>
-                <p className='font-bold'>${40}</p>
-                <button className=''>X</button>
-              </div>
+              ))}
+        
       </div>
       
       {/* payment */}
       <div className=' flex-1  flex flex-col justify-center h-full bg-fuchsia-50 mx-2 p-20 lg:px-15 xl:px-20'>
               <div className='  flex flex-col justify-center gap-4'>
                   <div className='flex flex-row justify-between items-center'>
-                    <h1>Subtotal(3 Items)</h1>
-                    <p className='font-bold text-red-500' >${40}</p>
+                    <h1>Subtotal({totalItems} Items)</h1>
+                    <p className='font-bold text-red-500' >${totalPrice}</p>
                   </div>
                   <div className='flex flex-row justify-between items-center'>
                   <h1>Service Cost</h1>
-                  <p className='font-bold text-red-500'>${40}</p>
+                  <p className='font-bold text-red-500'>${0}</p>
                   </div>
                   <div className='flex flex-row justify-between items-center' >
                   <h1>Delivery Cost</h1>
@@ -60,7 +53,7 @@ const CartPage = () => {
 
                   <div className='flex flex-row justify-between items-center'>
                   <h1>Total(INCL. VAT)</h1>
-                  <p className='font-bold text-red-500'>${40}</p>
+                  <p className='font-bold text-red-500'>${totalPrice}</p>
                   </div>
 
                   <button className='w-1/2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition-colors cursor-pointer self-end'>Checkout</button>
