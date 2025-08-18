@@ -6,8 +6,8 @@ export const PUT = async (req: Request, { params }: { params: { id: string } }) 
     const body = await req.json()
     const { status } = body
     const order = await prisma.order.update ({
-        where: { id: Number(id) },
+        where: { id:id },
         data: { status },
     })
-    return NextResponse.json(order)
+    return NextResponse.json(order) 
 }

@@ -26,8 +26,31 @@ export const GET = async (req: NextRequest) => {
                 return NextResponse.json(
                     { message: "Something went wrong" }, { status: 500 } );
             }
-        }
+        } 
         
         return NextResponse.json(
             { message: "you are not authenticated" }, { status: 401 } );
     };
+
+    export const POST = async (req: NextRequest) => {
+        const session = await getAuthSession();
+        if(session)
+            {
+                try {
+                    const body = await req.json()
+                   if(session.user){
+                     const orders = await prisma.order.create({
+                        data:body
+                     })
+                     return new NextResponse(JSON.stringify(orders),{status:200})
+                   }}
+                catch (error) {
+                    console.log(error);
+                    return NextResponse.json(
+                        { message: "Something went wrong" }, { status: 500 } );
+                }
+            }
+            
+            return NextResponse.json(
+                { message: "you are not authenticated" }, { status: 401 } );
+        };
