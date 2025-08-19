@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import {MenuType} from '../../types/types'
+import { getAuthSession } from '@/utils/auth'
 
 const getData = async()=>{
       try {
@@ -15,9 +16,10 @@ const getData = async()=>{
       }
 }
 const MenuPage = async() => {
+    const session = await getAuthSession()
   const menu:MenuType = await getData()
   return (
-    <div className='p-4 lg:px-15 xl:px-20 h-[calc(100vh-5.5rem)] md:h-[calc(100vh-6.25rem)] flex flex-col items-center md:flex-row'>
+    <div className='relative p-4 lg:px-15 xl:px-20 h-[calc(100vh-5.5rem)] md:h-[calc(100vh-6.25rem)] flex flex-col items-center md:flex-row'>
        {menu.map((category)=>(
         <Link href={`/menu/${category.slug}`} key={category.id} className='w-full h-1/3 p-8 md:h-1/2' style={{backgroundColor:`${category.color}`}}>
          <div className='text-white flex flex-col justify-center items-center gap-2'>
@@ -28,6 +30,11 @@ const MenuPage = async() => {
             
         </Link>
        ))}
+
+    {session?.user.isAdmin && (
+       <div className='sm:absolute sm:top-2 sm:right-4 mt-2 bg-green-400 font-bold text-amber-100 px-4 py-1 rounded-md hover:bg-amber-500 transition-colors cursor-pointer'>
+        <Link href='/add'>Add new product</Link></div> 
+    )}
     </div>
   )
 

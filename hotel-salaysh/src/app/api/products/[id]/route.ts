@@ -3,15 +3,15 @@ import { prisma } from "@/utils/singleinstance"
 import { NextResponse } from "next/server";
 
 
-export const GET = async (req: Request, { params }: { params: { id: string } }) => {
-    const { id } = params;
+export const GET = async (req: Request, { params }: { params: Promise<{ id: string }> }) => {
+    const { id } = await params;
     const product = await prisma.product.findUnique({
         where: { id: parseInt(id) },
     });
     return new NextResponse(JSON.stringify(product), { status: 200 })
 }
-export const DELETE = async (req: Request, { params }: { params: { id: string } }) => {
-    const { id } = params;
+export const DELETE = async (req: Request, { params }: { params: Promise<{ id: string }> }) => {
+    const { id } = await params;
     const session = await getAuthSession()
    
         if(session?.user.isAdmin){

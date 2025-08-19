@@ -23,7 +23,7 @@ export const GET = async (req: NextRequest) => {
     } catch (error) {
         console.error('Error in /api/products:', error);
         
-        // Check if the error is related to Prisma connection
+        
         if (error instanceof Error) {
             if (error.message.includes('prisma') || error.message.includes('connection')) {
                 console.error('Database connection error:', error);
@@ -36,6 +36,33 @@ export const GET = async (req: NextRequest) => {
         
         return NextResponse.json(
             { message: "Error fetching products", error: error instanceof Error ? error.message : 'Unknown error' },
+            { status: 500 }
+        );
+    }
+};
+
+export const POST = async (req: NextRequest) => {
+    const { title, desc, price, catslug, options, img } = await req.json();
+    
+    try {
+        const product = await prisma.product.create({
+            data: {
+                title,
+                desc,
+                price: Number(price),
+                img,
+                options: options || [],
+                category: {
+                    connect: {
+                        slug: catslug
+                    }
+                }
+            },
+        });
+        return NextResponse.json(product, { status: 201 });
+    } catch (error) {
+        return NextResponse.json(
+            { message: "Error creating product", error: error instanceof Error ? error.message : 'Unknown error' },
             { status: 500 }
         );
     }
